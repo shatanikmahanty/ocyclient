@@ -73,19 +73,20 @@ class Footer extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        getIconButton(
+        OcyIconButton(
           title: "Email",
-          func: () {
+          onPressed: () {
             launchUrlString("mailto:support@opencodeyard.tech");
           },
+          url: "mailto:support@opencodeyard.tech",
           icon: FontAwesomeIcons.envelope,
         ),
         const SizedBox(
           height: 20,
         ),
-        getIconButton(
+        OcyIconButton(
           title: "FAQ",
-          func: () {
+          onPressed: () {
             // nb.toRoute("/licenses");
           },
           icon: FontAwesomeIcons.question,
@@ -93,9 +94,9 @@ class Footer extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        getIconButton(
+        OcyIconButton(
           title: "Support",
-          func: () {
+          onPressed: () {
             // nb.toRoute("/licenses");
           },
           icon: FontAwesomeIcons.headset,
@@ -118,9 +119,9 @@ class Footer extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        getIconButton(
+        OcyIconButton(
           title: "Terms",
-          func: () {
+          onPressed: () {
             // nb.toRoute("/licenses");
           },
           icon: FontAwesomeIcons.scaleBalanced,
@@ -128,9 +129,9 @@ class Footer extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        getIconButton(
+        OcyIconButton(
           title: "Privacy",
-          func: () {
+          onPressed: () {
             // nb.toRoute("/licenses");
           },
           icon: FontAwesomeIcons.userShield,
@@ -138,9 +139,9 @@ class Footer extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        getIconButton(
+        OcyIconButton(
           title: "Licenses",
-          func: () {
+          onPressed: () {
             nb.toRoute("/licenses");
           },
           icon: FontAwesomeIcons.fileInvoice,
@@ -235,5 +236,4 @@ class Footer extends StatelessWidget {
       legal(size, nb),
     ];
   }
-
 }

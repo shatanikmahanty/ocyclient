@@ -73,30 +73,33 @@ class Intro extends StatelessWidget {
             rowMainAxisAlignment: MainAxisAlignment.center,
             minSpacing: 20,
             children: [
-              getIconButton(
+              OcyIconButton(
                 title: size.width < 700 ? "" : "LinkedIn",
-                func: () {
+                onPressed: () {
                   launchUrlString(Config.linkedInUrl);
                 },
                 icon: FontAwesomeIcons.linkedinIn,
+                url: Config.linkedInUrl,
               ),
-              getIconButton(
+              OcyIconButton(
                 title: size.width < 700 ? "" : "Telegram",
-                func: () {
+                onPressed: () {
                   launchUrlString(Config.telegramUrl);
                 },
                 icon: FontAwesomeIcons.telegram,
+                url: Config.telegramUrl,
               ),
-              getIconButton(
+              OcyIconButton(
                 title: size.width < 700 ? "" : "GitHub",
-                func: () {
+                onPressed: () {
                   launchUrlString(Config.ghUrl);
                 },
                 icon: FontAwesomeIcons.github,
+                url: Config.ghUrl,
               ),
-              getIconButton(
+              OcyIconButton(
                 title: size.width < 700 ? "" : "Discord",
-                func: () {
+                onPressed: () {
                   showToast("Coming Soon!");
                 },
                 icon: FontAwesomeIcons.discord,

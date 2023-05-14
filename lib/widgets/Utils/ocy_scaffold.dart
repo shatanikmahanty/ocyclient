@@ -394,27 +394,27 @@ class _OcyScaffoldState extends State<OcyScaffold>
       ),
       color: const Color(0xff0f254e),
       items: [
-        PopupMenuItem(
+        const PopupMenuItem(
           height: 40,
           value: 1,
           child: SizedBox(
             height: 40,
             width: 120,
-            child: getIconButtonBody(
-              "Profile",
-              FontAwesomeIcons.user,
+            child: OcyIconButtonBody(
+              title: "Profile",
+              icon: FontAwesomeIcons.user,
             ),
           ),
         ),
-        PopupMenuItem(
+        const PopupMenuItem(
           height: 40,
           value: 2,
           child: SizedBox(
             height: 40,
             width: 120,
-            child: getIconButtonBody(
-              "Log Out",
-              FontAwesomeIcons.rightFromBracket,
+            child: OcyIconButtonBody(
+              title: "Log Out",
+              icon: FontAwesomeIcons.rightFromBracket,
             ),
           ),
         ),

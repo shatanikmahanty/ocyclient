@@ -45,31 +45,38 @@ class MemberVertical extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     children: [
                       if ((member.linkedIn ?? "").isNotEmpty)
-                        getIconButton(
+                        OcyIconButton(
                           title: "",
-                          func: () {
+                          onPressed: () {
                             launchUrlString(member.linkedIn ?? "");
                           },
                           icon: FontAwesomeIcons.linkedinIn,
+                          url: member.linkedIn,
                         ),
                       const SizedBox(
                         height: 10,
                       ),
-                      if ((member.github ?? "").isNotEmpty)
-                        getIconButton(
+                      if ((member.github ?? "").isNotEmpty) ...[
+                        OcyIconButton(
                           title: "",
-                          func: () {
+                          onPressed: () {
                             launchUrlString(member.github ?? "");
                           },
                           icon: FontAwesomeIcons.github,
+                          url: member.github,
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
                       if ((member.twitter ?? "").isNotEmpty)
-                        getIconButton(
+                        OcyIconButton(
                           title: "",
-                          func: () {
+                          onPressed: () {
                             launchUrlString(member.twitter ?? "");
                           },
                           icon: FontAwesomeIcons.twitter,
+                          url: member.twitter,
                         ),
                     ],
                   ),

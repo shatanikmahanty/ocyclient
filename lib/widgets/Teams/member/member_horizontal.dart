@@ -70,28 +70,31 @@ class MemberHorizontal extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             children: [
               if ((member.linkedIn ?? "").isNotEmpty)
-                getIconButton(
+                OcyIconButton(
                   title: "",
-                  func: () {
+                  onPressed: () {
                     launchUrlString(member.linkedIn ?? "");
                   },
                   icon: FontAwesomeIcons.linkedinIn,
+                  url: member.linkedIn,
                 ),
               if ((member.github ?? "").isNotEmpty)
-                getIconButton(
+                OcyIconButton(
                   title: "",
-                  func: () {
+                  onPressed: () {
                     launchUrlString(member.github ?? "");
                   },
                   icon: FontAwesomeIcons.github,
+                  url: member.github,
                 ),
               if ((member.twitter ?? "").isNotEmpty)
-                getIconButton(
+                OcyIconButton(
                   title: "",
-                  func: () {
+                  onPressed: () {
                     launchUrlString(member.twitter ?? "");
                   },
                   icon: FontAwesomeIcons.twitter,
+                  url: member.twitter,
                 ),
             ],
           ),

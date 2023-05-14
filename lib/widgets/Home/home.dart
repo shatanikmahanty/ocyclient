@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
     //<a target="_blank" href="https://icons8.com/icon/51geCPj1J4bd/community">Community</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 
     return const OcyScaffold(
+      enableSelection: false,
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
