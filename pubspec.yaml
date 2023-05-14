@@ -34,51 +34,55 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
 
-  #ux
-  flutter_markdown: ^0.6.10+5
+  #ui
+  flutter_markdown: ^0.6.14
   html2md: ^1.2.6
-  carousel_slider: ^4.1.1
-  responsive_grid: ^2.1.0
+  carousel_slider: ^4.2.1
+  responsive_grid: ^2.2.0
 
   #Icons
   line_icons: ^2.0.1
-  font_awesome_flutter: ^10.1.0
+  font_awesome_flutter: ^10.4.0
 
   #State management
-  provider: ^6.0.3
+  provider: ^6.0.5
   get: ^4.6.5
 
   #Session management
-  shared_preferences: 2.0.15
+  shared_preferences: ^2.1.1
 
   # Extras
-  url_launcher: ^6.1.6
-  webview_flutter: ^3.0.4
+  url_launcher: ^6.1.11
+  webview_flutter: ^4.2.0
   step_progress_indicator: ^1.0.2
-  fluttertoast: ^8.0.9
+  fluttertoast: ^8.2.1
   face_pile: ^0.0.2
-  intl: ^0.17.0
+  intl: ^0.18.1
 
   #Networking
-  http: ^0.13.5
+  http: ^0.13.6
 
   #Firebase dependencies
-  firebase_auth: ^3.11.1
-  firebase_core: ^1.24.0
-  cloud_firestore: ^3.5.0
+  firebase_auth: ^4.6.0
+  firebase_core: ^2.12.0
+  cloud_firestore: ^4.7.0
 
   #Web
-  universal_html: ^2.0.8
-  js: ^0.6.3
+  universal_html: ^2.2.1
+  js: ^0.6.7
 
   #Login Providers
-  google_sign_in: ^5.4.2
+  google_sign_in: ^6.1.0
 
   #Apis
-  dio: ^4.0.6
+  dio: ^5.1.2
 
   #Api key management
   flutter_dotenv: ^5.0.2
+
+dependency_overrides:
+    #Fixes the issue with flutter localizaions conflict
+    intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
