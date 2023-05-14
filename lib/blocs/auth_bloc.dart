@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:ocyclient/blocs/navigation_bloc.dart';
 import 'package:ocyclient/configs/config.dart';
-import 'package:ocyclient/external/github_sign_in/lib/github_sign_in.dart';
 import 'package:ocyclient/models/user/user_model.dart';
 import 'package:ocyclient/widgets/Utils/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,103 +50,117 @@ class AuthenticationBloc extends ChangeNotifier {
     fetchDataFromSharedPreferences();
   }
 
-  Future authWithGithub(BuildContext context, NavigationBloc nb,
-      bool isAccountLinkOperation) async {
-    final GitHubSignIn gitHubSignIn = GitHubSignIn(
-      clientId: Config.clientId,
-      clientSecret: Config.clientSecret,
-      redirectUrl: Config.redirectUrl,
-      clearCache: false,
-      allowSignUp: true,
-    );
+  Future<void> signInWithGitHub() async {
+    // Create a new provider
+    GithubAuthProvider githubProvider = GithubAuthProvider();
 
-    toggleInProgressStatus(true);
-    toggleGithubSignInStatus(true);
+    // Once signed in, return the UserCredential
+    final credential =
+        await FirebaseAuth.instance.signInWithPopup(githubProvider);
+    print(credential.user?.metadata ?? "Null");
+    print(credential.credential?.accessToken ?? "Null");
 
-    GitHubSignInResult result = await gitHubSignIn.signIn(
-      context,
-      isAccountLinkOperation,
-    );
-
-    switch (result.status) {
-      case GitHubSignInResultStatus.ok:
-        if (result.token != null) {
-          String? accessToken = result.token;
-
-          if (!isAccountLinkOperation) {
-            auth
-                .signInWithCredential(
-                    GithubAuthProvider.credential(result.token ?? ""))
-                .then((res) async {
-              if (res.user != null) {
-                dio.options.headers["Authorization"] = "token ${result.token}";
-                dio.options.headers["accept"] =
-                    "application/vnd.github.v3+json";
-
-                var response =
-                    await dio.get(Config.ghRootUrl + Config.ghUserApi);
-
-                User? user = res.user;
-
-                List existingUser =
-                    await checkUserExists(response.data["email"]);
-
-                if (!existingUser[0]) {
-                  _isLoggedIn = true;
-                  _userModel = UserModel(
-                    user?.uid ?? "",
-                    response.data["email"],
-                    user?.displayName ?? "",
-                    user?.photoURL ?? "",
-                    accessToken ?? "",
-                    {},
-                    ["Github"],
-                  );
-                  await signUpUser(isGoogle: false);
-                } else {
-                  await fetchDataFromFirestore(existingUser[1]);
-                  if (_userModel.loginProvidersConnected.contains("Google")) {
-                    _userModel.loginProvidersConnected.add("Github");
-                    await updateLoginProviders(
-                      List<String>.from(_userModel.loginProvidersConnected),
-                    );
-                  }
-                }
-
-                await savePrefs();
-                toggleInProgressStatus(false);
-                toggleGithubSignInStatus(false);
-                nb.toRoute(
-                  "/home",
-                  shouldPopCurrent: true,
-                );
-              }
-            });
-          } else {
-            _userModel.loginProvidersConnected.add("Github");
-            _userModel.userGitHubAccessToken = accessToken ?? "";
-            await updateLoginProviders(
-              List<String>.from(_userModel.loginProvidersConnected),
-            );
-            toggleInProgressStatus(false);
-            toggleGoogleSignInStatus(false);
-          }
-        }
-        break;
-
-      case GitHubSignInResultStatus.cancelled:
-      case GitHubSignInResultStatus.failed:
-        toggleInProgressStatus(false);
-        toggleGithubSignInStatus(false);
-        if (result.errorMessage.contains("An account already exists")) {
-          showToast("Account already exists with Google."
-              " Login using your google account and link GitHub from profile.");
-        } else {
-          showToast(result.errorMessage);
-        }
-        break;
-    }
+    // Or use signInWithRedirect
+    // return await FirebaseAuth.instance.signInWithRedirect(githubProvider);
   }
+
+  // Future authWithGithub(BuildContext context, NavigationBloc nb,
+  //     bool isAccountLinkOperation) async {
+  //   final GitHubSignIn gitHubSignIn = GitHubSignIn(
+  //     clientId: Config.clientId,
+  //     clientSecret: Config.clientSecret,
+  //     redirectUrl: Config.redirectUrl,
+  //     clearCache: false,
+  //     allowSignUp: true,
+  //   );
+  //
+  //   toggleInProgressStatus(true);
+  //   toggleGithubSignInStatus(true);
+  //
+  //   GitHubSignInResult result = await gitHubSignIn.signIn(
+  //     context,
+  //     isAccountLinkOperation,
+  //   );
+  //
+  //   switch (result.status) {
+  //     case GitHubSignInResultStatus.ok:
+  //       if (result.token != null) {
+  //         String? accessToken = result.token;
+  //
+  //         if (!isAccountLinkOperation) {
+  //           auth
+  //               .signInWithCredential(
+  //                   GithubAuthProvider.credential(result.token ?? ""))
+  //               .then((res) async {
+  //             if (res.user != null) {
+  //               dio.options.headers["Authorization"] = "token ${result.token}";
+  //               dio.options.headers["accept"] =
+  //                   "application/vnd.github.v3+json";
+  //
+  //               var response =
+  //                   await dio.get(Config.ghRootUrl + Config.ghUserApi);
+  //
+  //               User? user = res.user;
+  //
+  //               List existingUser =
+  //                   await checkUserExists(response.data["email"]);
+  //
+  //               if (!existingUser[0]) {
+  //                 _isLoggedIn = true;
+  //                 _userModel = UserModel(
+  //                   user?.uid ?? "",
+  //                   response.data["email"],
+  //                   user?.displayName ?? "",
+  //                   user?.photoURL ?? "",
+  //                   accessToken ?? "",
+  //                   {},
+  //                   ["Github"],
+  //                 );
+  //                 await signUpUser(isGoogle: false);
+  //               } else {
+  //                 await fetchDataFromFirestore(existingUser[1]);
+  //                 if (_userModel.loginProvidersConnected.contains("Google")) {
+  //                   _userModel.loginProvidersConnected.add("Github");
+  //                   await updateLoginProviders(
+  //                     List<String>.from(_userModel.loginProvidersConnected),
+  //                   );
+  //                 }
+  //               }
+  //
+  //               await savePrefs();
+  //               toggleInProgressStatus(false);
+  //               toggleGithubSignInStatus(false);
+  //               nb.toRoute(
+  //                 "/home",
+  //                 shouldPopCurrent: true,
+  //               );
+  //             }
+  //           });
+  //         } else {
+  //           _userModel.loginProvidersConnected.add("Github");
+  //           _userModel.userGitHubAccessToken = accessToken ?? "";
+  //           await updateLoginProviders(
+  //             List<String>.from(_userModel.loginProvidersConnected),
+  //           );
+  //           toggleInProgressStatus(false);
+  //           toggleGoogleSignInStatus(false);
+  //         }
+  //       }
+  //       break;
+  //
+  //     case GitHubSignInResultStatus.cancelled:
+  //     case GitHubSignInResultStatus.failed:
+  //       toggleInProgressStatus(false);
+  //       toggleGithubSignInStatus(false);
+  //       if (result.errorMessage.contains("An account already exists")) {
+  //         showToast("Account already exists with Google."
+  //             " Login using your google account and link GitHub from profile.");
+  //       } else {
+  //         showToast(result.errorMessage);
+  //       }
+  //       break;
+  //   }
+  // }
 
   Future fetchDataFromSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

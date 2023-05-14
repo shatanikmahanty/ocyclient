@@ -86,7 +86,8 @@ class AccountWidget extends StatelessWidget {
                     if (name == "Google") {
                       ab.authWithGoogle(nb, true);
                     } else {
-                      ab.authWithGithub(context, nb, true);
+                      ///TODO add custom logic if this works
+                      ab.signInWithGitHub();
                     }
                   }
                 },

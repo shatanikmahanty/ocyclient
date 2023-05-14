@@ -278,7 +278,9 @@ class LoginSignUpState extends State<LoginSignUp> {
                   showToast("Please wait. Login in progress");
                   return;
                 }
-                ab.authWithGithub(context, nb, false);
+
+                ///TODO add custom logic if this works
+                ab.signInWithGitHub();
               },
               icon: !isMobile && ab.isGithubSignInOngoing
                   ? Stack(

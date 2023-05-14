@@ -199,20 +199,19 @@ class UserTabState extends State<UserTab> {
                                   ),
                                   child: Center(
                                     child: Markdown(
-                                      onTapLink:
-                                          (String text, String? url, String title) {
+                                      onTapLink: (String text, String? url,
+                                          String title) {
                                         if (url != null) {
-                                          launchUrlString(
-                                            url,
-                                            mode:
-                                                LaunchMode.externalApplication
-                                          );
+                                          launchUrlString(url,
+                                              mode: LaunchMode
+                                                  .externalApplication);
                                         } else {
                                           showToast("Invalid URL");
                                         }
                                       },
                                       physics: const BouncingScrollPhysics(),
-                                      imageBuilder: (Uri u, String? b, String? c){
+                                      imageBuilder:
+                                          (Uri u, String? b, String? c) {
                                         return Image.network(u.toString());
                                       },
                                       data: ab.userModel.bio ??
@@ -254,9 +253,9 @@ class UserTabState extends State<UserTab> {
           padding: const EdgeInsets.all(10),
           width: size.width < 1000 ? size.width : size.width - 231,
           height: size.height / 3,
-          child: Column(
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [],
+            children: [],
           ),
         ),
       ),

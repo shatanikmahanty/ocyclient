@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ocyclient/widgets/Home/sub_pages/benefits.dart';
-import 'package:ocyclient/widgets/Home/sub_pages/events.dart';
 import 'package:ocyclient/widgets/Home/sub_pages/footer.dart';
 import 'package:ocyclient/widgets/Home/sub_pages/intro.dart';
 import 'package:ocyclient/widgets/Home/sub_pages/projects.dart';
@@ -27,12 +26,12 @@ class _HomePageState extends State<HomePage> {
     //Add attribution
     //<a target="_blank" href="https://icons8.com/icon/51geCPj1J4bd/community">Community</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 
-    return OcyScaffold(
+    return const OcyScaffold(
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
             Intro(),
             // if (kDebugMode) UpcomingEvents(),
             Benefits(),
